@@ -1,0 +1,98 @@
+Server [localhost]:
+Database [postgres]:
+Port [4443]:
+Username [postgres]: postgres
+Password for user postgres:
+psql (9.4.4)
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# \c iqbalfauzi_14650013
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+You are now connected to database "iqbalfauzi_14650013" as user "postgres".
+
+
+iqbalfauzi_14650013=# create function konversiFC (float) returns float as 'select (5*($1-32))/9;' language 'sql';
+CREATE FUNCTION
+iqbalfauzi_14650013=# select konversiFC(30);
+    konversifc
+-------------------
+ -1.11111111111111
+(1 row)
+
+iqbalfauzi_14650013=# select * from mahasiswa;
+ id_mah | nama_mah | fakultas |  alamat
+--------+----------+----------+----------
+      1 | bagus    | saintek  | surabaya
+      2 | hadi     | saintek  | malang
+      3 | nur      | saintek  | magetan
+      4 | setia    | saintek  | madiun
+      5 | rohman   | saintek  | jombang
+(5 rows)
+
+iqbalfauzi_14650013=# create function cari_alamat(text) returns text as 'select alamat_mah from mahasiswa where nama_mah=$1;' language 'sql';
+CREATE FUNCTION
+iqbalfauzi_14650013=# select cari_alamat('bagus');
+ cari_alamat
+-------------
+ surabaya
+(1 row)
+
+
+iqbalfauzi_14650013=# create or replace function nilain(integer) returns varchar as 'declare nilai varchar; begin if ($1>100 or $1<0) then select into nilai "salah"; elsif $1>=90 then select into nilai ''A''; elsif 70<=$1 and $1<90 then select into nilai ''B''; elsif 60<=$1 and $1<70 then select into nilai ''C''; elsif 50<=$1 and $1<60 then select into nilai ''D''; elsif 0<=$1 and $1<50 then select into nilai ''E''; end if; return nilai; end;' language 'plpgsql';
+CREATE FUNCTION
+iqbalfauzi_14650013=# select nilain(85);
+ nilain
+--------
+ B
+(1 row)
+
+
+iqbalfauzi_14650013=# create or replace function nilain(integer) returns varchar as 'declare nilai varchar; begin if ($1>100 or $1<0) then select into nilai "salah"; elsif $1>=90 then select into nilai ''A''; elsif 70<=$1 and $1<90 then select into nilai ''B''; elsif 60<=$1 and $1<70 then select into nilai ''C''; elsif 50<=$1 and $1<60 then select into nilai ''D''; elsif 0<=$1 and $1<50 then select into nilai ''E''; end if; return nilai; end;' language 'plpgsql';
+CREATE FUNCTION
+iqbalfauzi_14650013=# select nilain(85);
+ nilain
+--------
+ B
+(1 row)
+
+
+iqbalfauzi_14650013=# create function gg(integer) returns varchar as 'declare hasil varchar; begin if $1%2=0 then select into hasil ''genap''; else select into hasil ''ganjil''; end if; return hasil; end;' language 'plpgsql';
+CREATE FUNCTION
+iqbalfauzi_14650013=# select gg(9);
+   gg
+--------
+ ganjil
+(1 row)
+
+
+iqbalfauzi_14650013=# alter table mahasiswa add column modifikasi date;
+ALTER TABLE
+iqbalfauzi_14650013=# create function modifikasi() returns opaque as 'begin new.modifikasi:=current_date; return new; end;' language 'plpgsql';
+CREATE FUNCTION
+iqbalfauzi_14650013=# create trigger trigger_modifikasi before insert or update on mahasiswa for each row execute procedure modifikasi();
+WARNING:  changing return type of function modifikasi from "opaque" to "trigger"
+CREATE TRIGGER
+iqbalfauzi_14650013=# insert into mahasiswa values(8,'bella','saintek','magetan');
+INSERT 0 1
+iqbalfauzi_14650013=# update mahasiswa set alamat='panekan' where id_mah=6;
+UPDATE 1
+iqbalfauzi_14650013=# update mahasiswa set alamat='madiun' where id_mah=5;
+UPDATE 1
+iqbalfauzi_14650013=# select*from mahasiswa;
+ id_mah | nama_mah | fakultas |  alamat  | modifikasi
+--------+----------+----------+----------+------------
+      1 | bagus    | saintek  | surabaya |
+      2 | hadi     | saintek  | malang   |
+      3 | nur      | saintek  | magetan  |
+      4 | setia    | saintek  | madiun   |
+      6 | bella    | saintek  | panekan  | 2015-11-10
+      5 | rohman   | saintek  | madiun   | 2015-11-10
+(6 rows)
+
+
+iqbalfauzi_14650013=#

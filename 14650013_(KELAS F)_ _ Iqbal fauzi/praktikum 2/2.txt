@@ -1,0 +1,48 @@
+Active code page: 1252
+
+C:\Program Files\PostgreSQL\8.2\bin>psql -U iqbal postgres
+Password for user iqbal:
+Welcome to psql 8.2.5, the PostgreSQL interactive terminal.
+
+Type:  \copyright for distribution terms
+       \h for help with SQL commands
+       \? for help with psql commands
+       \g or terminate with semicolon to execute query
+       \q to quit
+
+postgres=> \c iqbalfauzi_14650013
+You are now connected to database "iqbalfauzi_14650013".
+iqbalfauzi_14650013=> revoke all on table gaji from postgres;
+ERROR:  permission denied for relation gaji
+iqbalfauzi_14650013=> \du 
+                               List of roles
+ Role name | Superuser | Create role | Create DB | Connections | Member of
+-----------+-----------+-------------+-----------+-------------+-----------
+ asmarani  | no        | no          | yes       | no limit    |
+ fauzi     | no        | no          | yes       | no limit    |
+ iqbal     | no        | no          | yes       | no limit    |
+ postgres  | yes       | yes         | yes       | no limit    |
+(4 rows)
+
+iqbalfauzi_14650013=> \z 
+Access privileges for database "iqbalfauzi_14650013"
+ Schema |     Name     | Type  | Access privileges
+--------+--------------+-------+-------------------
+ public | gaji         | table |
+ public | identitasnim | table |
+(2 rows)
+
+iqbalfauzi_14650013=> select*from identitasnim;
+ERROR:  permission denied for relation identitasnim
+iqbalfauzi_14650013=> select*from identitasnim;
+ERROR:  permission denied for relation gaji
+iqbalfauzi_14650013=> select*from identitasnim;
+ id_idn | namadepan_idn | namabelakang_idn | tanggal_lahir_idn | status_idn | al
+amat_idn
+--------+---------------+------------------+-------------------+------------+---
+---------
+(0 rows)
+
+iqbalfauzi_14650013=> select*from identitasnim;
+ERROR:  permission denied for relation identitasnim
+iqbalfauzi_14650013=>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e444e174-d801-4d38-9d1a-73aa52522bc1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nim_mah" class="java.lang.Integer">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select nim_mah, nama_mah, nama_fak,from mahasiswa m, fakultas f where m.id_fak=f.id_fak and nim_mah=$P{nim_mah};]]>
+	</queryString>
+	<field name="nim_mhs" class="java.lang.Integer"/>
+	<field name="nama_mhs" class="java.lang.String"/>
+	<field name="nama_fak" class="java.lang.String"/>
+	<field name="jurusan_mhs" class="java.lang.String"/>
+	<group name="nim_mhs">
+		<groupExpression><![CDATA[$F{nim_mhs}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="100" height="32" forecolor="#666666" backcolor="#E6E6E6" uuid="d5881f23-d648-4869-9f3e-ff1034a6018f"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[nim_mhs]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="100" y="0" width="455" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="e70b4417-3661-4092-bb1b-10dc7cec3ca2"/>
+					<textElement>
+						<font size="24" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nim_mhs}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="-20" y="32" width="595" height="1" forecolor="#666666" uuid="ff4bc5ee-3148-4129-9557-1b11dfac0064"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="de428e45-5e61-4aba-8918-a38e224b7b1f"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="e0c6f527-1c91-414d-986f-a3e767ef38d1"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TITLE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="962b2122-69e6-44bc-9a90-25d5cf88d04d"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Add a description here]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="f42b3616-98af-46f3-9332-c325960985b8"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="1767cae0-64ad-40dd-be36-40d57d2fd58e"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[nama_mhs]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="185" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="bbd77ffc-0a13-4446-91ad-d28820a1ccef"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[nama_fak]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="370" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="8c0c8884-386e-4bfa-8eb3-8d319aa38e12"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[jurusan_mhs]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="d0b8da6e-3274-4170-a469-71c33dbfc357"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="185" height="20" uuid="9173e310-d0b4-407d-8d76-b9a997bed86c"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nama_mhs}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="185" y="0" width="185" height="20" uuid="afd3f676-fbb6-4fcf-a732-088e5e10cd11"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nama_fak}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="370" y="0" width="185" height="20" uuid="d377c066-3eb7-423b-9920-f1b339c1b6f4"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jurusan_mhs}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="8086c355-7e78-41e5-8459-9b62af50f03c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="ea17e3cf-7acc-4452-8b54-1f986555523d"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="777852e5-ea48-45e3-831f-4ae492d6d17d"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

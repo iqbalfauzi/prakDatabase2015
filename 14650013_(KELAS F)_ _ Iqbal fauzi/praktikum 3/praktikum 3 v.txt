@@ -1,0 +1,169 @@
+Active code page: 1252
+
+C:\Program Files\PostgreSQL\8.2\bin>psql -U postgres
+Password for user postgres:
+Welcome to psql 8.2.5, the PostgreSQL interactive terminal.
+
+Type:  \copyright for distribution terms
+       \h for help with SQL commands
+       \? for help with psql commands
+       \g or terminate with semicolon to execute query
+       \q to quit
+
+postgres=# \c iqbalfauzi_14650013;
+You are now connected to database "iqbalfauzi_14650013".
+iqbalfauzi_14650013=# \d
+            List of relations
+ Schema |     Name     | Type  |  Owner
+--------+--------------+-------+----------
+ public | gaji         | table | postgres
+ public | identitasnim | table | postgres
+(2 rows)
+
+iqbalfauzi_14650013=# create table fakultas (id_fak integer not null, nama_fak v
+archar (20));
+CREATE TABLE
+iqbalfauzi_14650013=# insert into fakultas values (1, 'SAINTEK');
+INSERT 0 1
+iqbalfauzi_14650013=# insert into fakultas values (2, 'PSIKOLOGI');
+INSERT 0 1
+iqbalfauzi_14650013=# alter table mahasiswa add primary key (id_fak);
+ERROR:  relation "mahasiswa" does not exist
+iqbalfauzi_14650013=# alter table fakultas add primary key (id_fak);
+NOTICE:  ALTER TABLE / ADD PRIMARY KEY will create implicit index "fakultas_pkey
+" for table "fakultas"
+ALTER TABLE
+iqbalfauzi_14650013=# create table mahasiswa (nim_mah integer not null,nama_mah
+varchar (20), alamat_mah varchar (20), nomor_telp varchar (20),id_fak integer no
+t null references fakultas ,primary key (nim_mah, id_fak);
+iqbalfauzi_14650013(# \r
+Query buffer reset (cleared).
+iqbalfauzi_14650013=# create table mahasiswa (nim_mah integer not null,nama_mah
+varchar (20), alamat_mah varchar (20), nomor_telp varchar (20),id_fak integer no
+t null references fakultas ,primary key (nim_mah, id_fak);
+iqbalfauzi_14650013(# create table mahasiswa (nim_mah integer not null,nama_mah
+varchar (20), alamat_mah varchar (20), nomor_telp varchar (20),id_fak integer no
+t null references fakultas ,primary key (nim_mah, id_fak);
+iqbalfauzi_14650013(# \r
+Query buffer reset (cleared).
+iqbalfauzi_14650013=# create table mahasiswa (nim_mah integer not null,nama_mah
+varchar (20), alamat_mah varchar (20), nomor_telp varchar (20),id_fak integer no
+t null references fakultas ,primary key (nim_mah, id_fak);
+iqbalfauzi_14650013(# create table mahasiswa (nim_mah integer not null,nama_mah
+varchar (20), alamat_mah varchar (20), nomor_telp varchar (20),id_fak integer no
+t null references fakultas ,primary key (nim_mah, id_fak);
+iqbalfauzi_14650013(# \r
+Query buffer reset (cleared).
+iqbalfauzi_14650013=# create table mahasiswa (nim_mah integer not null,nama_mah
+varchar (20), alamat_mah varchar (20), nomor_telp varchar (20),id_fak integer no
+t null references fakultas ,primary key (nim_mah, id_fak));
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "mahasiswa_pkey"
+for table "mahasiswa"
+CREATE TABLE
+iqbalfauzi_14650013=# insert into mahasiswa values (12, 'edi' , 'malang', '08564
+53428', 1);
+INSERT 0 1
+iqbalfauzi_14650013=# insert into mahasiswa values (13, 'sinta' , 'jogja', '0813
+347565675', 1);
+INSERT 0 1
+iqbalfauzi_14650013=# insert into mahasiswa values (14, 'luki' , 'ponorogo', '08
+5275658789', 2);
+INSERT 0 1
+iqbalfauzi_14650013=# select nim_mah ,nama_mah from mahasiswa;
+ nim_mah | nama_mah
+---------+----------
+      12 | edi
+      13 | sinta
+      14 | luki
+(3 rows)
+
+iqbalfauzi_14650013=# select * from mahasiswa where nim_mah=12;
+ nim_mah | nama_mah | alamat_mah | nomor_telp | id_fak
+---------+----------+------------+------------+--------
+      12 | edi      | malang     | 0856453428 |      1
+(1 row)
+
+iqbalfauzi_14650013=# select nim_mah , nama_mah ,nama_ fak from mahasiswa,fakult
+as where mahasiswa.id_fak=fakultas.id_fak;
+ERROR:  syntax error at or near "fak"
+LINE 1: select nim_mah , nama_mah ,nama_ fak from mahasiswa,fakultas...
+                                         ^
+iqbalfauzi_14650013=# select nim_mah , nama_mah ,nama_fak from mahasiswa,fakulta
+s where mahasiswa.id_fak=fakultas.id_fak;
+ nim_mah | nama_mah | nama_fak
+---------+----------+-----------
+      12 | edi      | SAINTEK
+      13 | sinta    | SAINTEK
+      14 | luki     | PSIKOLOGI
+(3 rows)
+
+iqbalfauzi_14650013=# delete * from mahasiswa where nim_mah=13;
+ERROR:  syntax error at or near "*"
+LINE 1: delete * from mahasiswa where nim_mah=13;
+               ^
+iqbalfauzi_14650013=# delete from mahasiswa where nim_mah=13;
+DELETE 1
+iqbalfauzi_14650013=# update mahasiswa set alamat_mah='solo, nomor_telp='0857688
+788' where nim_mah=12;
+iqbalfauzi_14650013'# update mahasiswa set alamat_mah='solo', nomor_telp='085768
+8788' where nim_mah=12;
+iqbalfauzi_14650013'# \r
+iqbalfauzi_14650013'# \r
+iqbalfauzi_14650013'# \"
+iqbalfauzi_14650013'# \r
+iqbalfauzi_14650013'# update mahasiswa set alamat_mah='solo', nomor_telp='085768
+8788, where nim_mah=12;
+ERROR:  syntax error at or near "0857688788"
+LINE 1: ...pdate mahasiswa set alamat_mah='solo, nomor_telp='0857688788...
+                                                             ^
+iqbalfauzi_14650013=# update mahasiswa set alamat_mah='solo', nomor_telp='085768
+8788' where nim_mah=12;
+UPDATE 1
+iqbalfauzi_14650013=# select * from mahasiswa order by nim_mah desc;
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak
+---------+----------+------------+--------------+--------
+      14 | luki     | ponorogo   | 085275658789 |      2
+      12 | edi      | solo       | 0857688788   |      1
+(2 rows)
+
+iqbalfauzi_14650013=# select * from fakultas order by 2 asc;
+ id_fak | nama_fak
+--------+-----------
+      2 | PSIKOLOGI
+      1 | SAINTEK
+(2 rows)
+
+iqbalfauzi_14650013=# select * from mahasiswa,fakultas where mahasiswa.id_fak=fa
+kultas.id_fak;
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak | id_fak | nama_fak
+---------+----------+------------+--------------+--------+--------+-----------
+      14 | luki     | ponorogo   | 085275658789 |      2 |      2 | PSIKOLOGI
+      12 | edi      | solo       | 0857688788   |      1 |      1 | SAINTEK
+(2 rows)
+
+iqbalfauzi_14650013=# select * from mahasiswa, fakultas where mahasiswa.id_fak=f
+akultas.id_fak and nama_fak='SAINTEK';
+ nim_mah | nama_mah | alamat_mah | nomor_telp | id_fak | id_fak | nama_fak
+---------+----------+------------+------------+--------+--------+----------
+      12 | edi      | solo       | 0857688788 |      1 |      1 | SAINTEK
+(1 row)
+
+iqbalfauzi_14650013=# select * from mahasiswa, fakultas where mahasiswa.id_fak=f
+akultas.id_fak and nama_fak!='SAINTEK';
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak | id_fak | nama_fak
+---------+----------+------------+--------------+--------+--------+-----------
+      14 | luki     | ponorogo   | 085275658789 |      2 |      2 | PSIKOLOGI
+(1 row)
+
+iqbalfauzi_14650013=# DELETE FROM MAHASISWA WHERE id_fak=1;
+DELETE 1
+iqbalfauzi_14650013=# DELETE FROM fakultas WHERE id_fak=1;
+DELETE 1
+iqbalfauzi_14650013=# select * from mahasiswa,fakultas where mahasiswa.id_fak=fa
+kultas.id_fak;
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak | id_fak | nama_fak
+---------+----------+------------+--------------+--------+--------+-----------
+      14 | luki     | ponorogo   | 085275658789 |      2 |      2 | PSIKOLOGI
+(1 row)
+
+iqbalfauzi_14650013=#

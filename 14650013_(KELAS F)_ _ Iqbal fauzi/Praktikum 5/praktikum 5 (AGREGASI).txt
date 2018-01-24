@@ -1,0 +1,184 @@
+Active code page: 1252
+
+C:\Program Files\PostgreSQL\8.2\bin>psql -U postgres
+Password for user postgres:
+Welcome to psql 8.2.5, the PostgreSQL interactive terminal.
+
+Type:  \copyright for distribution terms
+       \h for help with SQL commands
+       \? for help with psql commands
+       \g or terminate with semicolon to execute query
+       \q to quit
+
+postgres=# \c iqbalfauzi_14650013;
+You are now connected to database "iqbalfauzi_14650013".
+iqbalfauzi_14650013=# select * from mahasiswa;
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak | gender
+---------+----------+------------+--------------+--------+--------
+       1 | luki     | ponorogo   | 085275658789 |      2 | L
+       2 | adi      | malang     | 08572332121  |      2 | L
+       3 | atik     | magelang   | 08572332121  |      1 | P
+       4 | arif     | solo       | 08572332121  |      1 | L
+       5 | adam     | Bojonegoro | 08572332121  |      1 | L
+       6 | intan    | Bojonegoro | 08572332121  |      2 | P
+       7 | melia    | Irian jaya | 08572332121  |      1 | P
+(7 rows)
+
+iqbalfauzi_14650013=# select min (nim_mah) from mahasiswa;
+ min
+-----
+   1
+(1 row)
+
+iqbalfauzi_14650013=# select max (nim_mah) from mahasiswa;
+ max
+-----
+   7
+(1 row)
+
+iqbalfauzi_14650013=# select avg (nim_mah) from mahasiswa;
+        avg
+--------------------
+ 4.0000000000000000
+(1 row)
+
+iqbalfauzi_14650013=# select avg (nim_mah) from mahasiswa where nim_mah)=12;
+ERROR:  syntax error at or near ")"
+LINE 1: select avg (nim_mah) from mahasiswa where nim_mah)=12;
+                                                         ^
+iqbalfauzi_14650013=# select avg (nim_mah) from mahasiswa where nim_mah)=1;
+ERROR:  syntax error at or near ")"
+LINE 1: select avg (nim_mah) from mahasiswa where nim_mah)=1;
+                                                         ^
+iqbalfauzi_14650013=# select avg (nim_mah) from mahasiswa where nim_mah=)12;
+ERROR:  syntax error at or near ")"
+LINE 1: select avg (nim_mah) from mahasiswa where nim_mah=)12;
+                                                          ^
+iqbalfauzi_14650013=# select avg (nim_mah) from mahasiswa where nim_mah=>12;
+ERROR:  operator does not exist: integer => integer
+LINE 1: select avg (nim_mah) from mahasiswa where nim_mah=>12;
+                                                         ^
+HINT:  No operator matches the given name and argument type(s). You may need to
+add explicit type casts.
+iqbalfauzi_14650013=# select avg (nim_mah) from mahasiswa where nim_mah >12;
+ avg
+-----
+
+(1 row)
+
+iqbalfauzi_14650013=# select avg (nim_mah) from mahasiswa where nim_mah > 1;
+        avg
+--------------------
+ 4.5000000000000000
+(1 row)
+
+iqbalfauzi_14650013=# select nama_fak,count(*) from fakultas group by nama_fak;
+ nama_fak  | count
+-----------+-------
+ HUMANIORA |     1
+ SAINTEK   |     1
+ PSIKOLOGI |     1
+(3 rows)
+
+iqbalfauzi_14650013=# select nama_fak,count(*) from mahasiswa m, fakultas fwhere
+ m.id_fak=f.id_fak group by nama_fak;
+ERROR:  syntax error at or near "m"
+LINE 1: ...ma_fak,count(*) from mahasiswa m, fakultas fwhere m.id_fak=f...
+                                                             ^
+iqbalfauzi_14650013=# select nama_fak,count(*) from mahasiswa m, fakultas f wher
+e m.id_fak=f.id_fak group by nama_fak;
+ nama_fak  | count
+-----------+-------
+ PSIKOLOGI |     3
+ SAINTEK   |     4
+(2 rows)
+
+iqbalfauzi_14650013=# select nama_fak,count(*) from mahasiswa m, fakultas f wher
+e m.id_fak=f.id_fak group by nama_fak having count (nim_mah) >=2;
+ nama_fak  | count
+-----------+-------
+ PSIKOLOGI |     3
+ SAINTEK   |     4
+(2 rows)
+
+iqbalfauzi_14650013=# select nama_fak,count(*) from mahasiswa m, fakultas f wher
+e m.id_fak=f.id_fak group by nama_fak having count (nim_mah) >=4;
+ nama_fak | count
+----------+-------
+ SAINTEK  |     4
+(1 row)
+
+iqbalfauzi_14650013=# select * from mahasiswa;
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak | gender
+---------+----------+------------+--------------+--------+--------
+       1 | luki     | ponorogo   | 085275658789 |      2 | L
+       2 | adi      | malang     | 08572332121  |      2 | L
+       3 | atik     | magelang   | 08572332121  |      1 | P
+       4 | arif     | solo       | 08572332121  |      1 | L
+       5 | adam     | Bojonegoro | 08572332121  |      1 | L
+       6 | intan    | Bojonegoro | 08572332121  |      2 | P
+       7 | melia    | Irian jaya | 08572332121  |      1 | P
+(7 rows)
+
+iqbalfauzi_14650013=# select nim_fak , nama_fak, alamat_fak ,nomor_telp ,id_fak,
+gender, case when gender 'L' then 'Laki-Laki' else 'Perempuan' end as jenis_kela
+min from mahasiswa;
+ERROR:  column "nim_fak" does not exist
+LINE 1: select nim_fak , nama_fak, alamat_fak ,nomor_telp ,id_fak,ge...
+               ^
+iqbalfauzi_14650013=# select nim_mah , nama_mah, alamat_mah ,nomor_telp ,id_fak,
+gender, case when gender 'L' then 'Laki-Laki' else 'Perempuan' end as jenis_kela
+min from mahasiswa;
+ERROR:  type "gender" does not exist
+LINE 1: ... alamat_mah ,nomor_telp ,id_fak,gender, case when gender 'L'...
+                                                             ^
+iqbalfauzi_14650013=# select nama_fak,count(*) from mahasiswa m, fakultas f wher
+e m.id_fak=f.id_fak group by nama_fak having count (nama_fak) >=4;
+ nama_fak | count
+----------+-------
+ SAINTEK  |     4
+(1 row)
+
+iqbalfauzi_14650013=# select nama_fak,count(*) from mahasiswa m, fakultas f wher
+e m.id_fak=f.id_fak group by nama_fak having count (nama_fak) >=3;
+ nama_fak  | count
+-----------+-------
+ PSIKOLOGI |     3
+ SAINTEK   |     4
+(2 rows)
+
+iqbalfauzi_14650013=# select nim_mah , nama_mah, alamat_mah ,nomor_telp ,id_fak,
+gender, case when gender= 'L' then 'Laki-Laki' else 'Perempuan' end as gender fr
+om mahasiswa;
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak | gender |  gender
+---------+----------+------------+--------------+--------+--------+-----------
+       1 | luki     | ponorogo   | 085275658789 |      2 | L      | Laki-Laki
+       2 | adi      | malang     | 08572332121  |      2 | L      | Laki-Laki
+       3 | atik     | magelang   | 08572332121  |      1 | P      | Perempuan
+       4 | arif     | solo       | 08572332121  |      1 | L      | Laki-Laki
+       5 | adam     | Bojonegoro | 08572332121  |      1 | L      | Laki-Laki
+       6 | intan    | Bojonegoro | 08572332121  |      2 | P      | Perempuan
+       7 | melia    | Irian jaya | 08572332121  |      1 | P      | Perempuan
+(7 rows)
+
+iqbalfauzi_14650013=# create view mahasiswa_fakultas as select nim_mah, nama_mah
+,nama_fak from mahasiswa m,fakultas s where m.id_fak=f.id_fak;
+ERROR:  missing FROM-clause entry for table "f"
+LINE 1: ...ama_fak from mahasiswa m,fakultas s where m.id_fak=f.id_fak;
+                                                              ^
+iqbalfauzi_14650013=# create view mahasiswa_fakultas as select nim_mah, nama_mah
+,nama_fak from mahasiswa m,fakultas f where m.id_fak=f.id_fak;
+CREATE VIEW
+iqbalfauzi_14650013=# select * from mahasiswa_fakultas;
+ nim_mah | nama_mah | nama_fak
+---------+----------+-----------
+       1 | luki     | PSIKOLOGI
+       2 | adi      | PSIKOLOGI
+       3 | atik     | SAINTEK
+       4 | arif     | SAINTEK
+       5 | adam     | SAINTEK
+       6 | intan    | PSIKOLOGI
+       7 | melia    | SAINTEK
+(7 rows)
+
+iqbalfauzi_14650013=#

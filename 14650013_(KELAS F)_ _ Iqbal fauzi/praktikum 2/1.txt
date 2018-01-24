@@ -1,0 +1,215 @@
+Active code page: 1252
+
+C:\Program Files\PostgreSQL\8.2\bin>psql -U postgres
+Password for user postgres:
+Welcome to psql 8.2.5, the PostgreSQL interactive terminal.
+
+Type:  \copyright for distribution terms
+       \h for help with SQL commands
+       \? for help with psql commands
+       \g or terminate with semicolon to execute query
+       \q to quit
+
+postgres=# \c
+You are now connected to database "postgres".
+postgres=# create database iqbalfauzi_14650013;
+CREATE DATABASE
+postgres=# \l
+              List of databases
+         Name          |  Owner   | Encoding
+-----------------------+----------+-----------
+ dbakademik            | postgres | SQL_ASCII
+ dbakademik14650097    | postgres | SQL_ASCII
+ dbakademik_14650088   | postgres | SQL_ASCII
+ dbpercobaaan_14650088 | postgres | SQL_ASCII
+ dbpercobaan           | postgres | SQL_ASCII
+ iqbalfauzi_14650013   | postgres | SQL_ASCII
+ postgres              | postgres | SQL_ASCII
+ template0             | postgres | SQL_ASCII
+ template1             | postgres | SQL_ASCII
+(9 rows)
+
+postgres=# \c iqbalfauzi_14650013;
+You are now connected to database "iqbalfauzi_14650013".
+                                        
+iqbalfauzi_14650013=# create user iqbal with createdb password '14650013';
+CREATE ROLE
+
+
+iqbalfauzi_14650013=# select 9-5+5*0+3/2;
+ ?column?
+----------
+        5
+(1 row)
+
+
+iqbalfauzi_14650013=# select 5%2;
+ ?column?
+----------
+        1
+(1 row)
+
+
+
+
+iqbalfauzi_14650013=# select current_date;
+    date
+------------
+ 2015-09-17
+(1 row)
+
+
+
+iqbalfauzi_14650013=# select current_timestamp;
+            now
+----------------------------
+ 2015-09-17 02:35:48.531+07
+(1 row)
+
+
+
+iqbalfauzi_14650013"# "
+iqbalfauzi_14650013(# \r
+Query buffer reset (cleared).
+iqbalfauzi_14650013=# SELECT extract(day from now()-cast('1996-04-07' as "timest
+amp"));
+ date_part
+-----------
+      7102
+(1 row)
+
+
+iqbalfauzi_14650013=# create table identitasNIM (Id_idn int not null, namadepan_
+Idn varchar(10), namaBelakang_Idn varchar(10),tanggal_lahir_idn date, status_idn
+ boolean, alamat_idn text);
+CREATE TABLE
+iqbalfauzi_14650013=# \d identitasNIM
+              Table "public.identitasnim"
+      Column       |         Type          | Modifiers
+-------------------+-----------------------+-----------
+ id_idn            | integer               | not null
+ namadepan_idn     | character varying(10) |
+ namabelakang_idn  | character varying(10) |
+ tanggal_lahir_idn | date                  |
+ status_idn        | boolean               |
+ alamat_idn        | text                  |
+
+iqbalfauzi_14650013=# create table pegawai (Id_idn int not null, namadepan_Idn v
+archar(10), namaBelakang_Idn varchar(10),tanggal_lahir_idn date, status_idn bool
+ean, alamat_idn text);
+CREATE TABLE
+iqbalfauzi_14650013=# \d pegawai
+                Table "public.pegawai"
+      Column       |         Type          | Modifiers
+-------------------+-----------------------+-----------
+ id_idn            | integer               | not null
+ namadepan_idn     | character varying(10) |
+ namabelakang_idn  | character varying(10) |
+ tanggal_lahir_idn | date                  |
+ status_idn        | boolean               |
+ alamat_idn        | text                  |
+
+iqbalfauzi_14650013=# alter table pegawai drop column"alamat_idn";
+ALTER TABLE
+iqbalfauzi_14650013=# \d pegawai
+                Table "public.pegawai"
+      Column       |         Type          | Modifiers
+-------------------+-----------------------+-----------
+ id_idn            | integer               | not null
+ namadepan_idn     | character varying(10) |
+ namabelakang_idn  | character varying(10) |
+ tanggal_lahir_idn | date                  |
+ status_idn        | boolean               |
+
+iqbalfauzi_14650013=# alter table pegawai add column "pekerjaan_idn" varchar(10)
+;
+ALTER TABLE
+iqbalfauzi_14650013=# alter table pegawai rename to pekerjaNIM;
+ALTER TABLE
+
+iqbalfauzi_14650013=# alter table pekerjaNIM rename column "pekerjaan_idn" to al
+amat_idn;
+ALTER TABLE
+iqbalfauzi_14650013=# \d pekerjaNIM;
+               Table "public.pekerjanim"
+      Column       |         Type          | Modifiers
+-------------------+-----------------------+-----------
+ id_idn            | integer               | not null
+ namadepan_idn     | character varying(10) |
+ namabelakang_idn  | character varying(10) |
+ tanggal_lahir_idn | date                  |
+ status_idn        | boolean               |
+ alamat_idn        | character varying(10) |
+
+
+
+                                               ^
+iqbalfauzi_14650013=# alter table pekerjaNIM add primary key (id_idn);
+NOTICE:  ALTER TABLE / ADD PRIMARY KEY will create implicit index "pekerjanim_pk
+ey" for table "pekerjanim"
+ALTER TABLE
+iqbalfauzi_14650013=# alter table pekerjaNIM ALTER column alamat_idn type text;
+ALTER TABLE
+iqbalfauzi_14650013=# \d pekerjaNIM
+               Table "public.pekerjanim"
+      Column       |         Type          | Modifiers
+-------------------+-----------------------+-----------
+ id_idn            | integer               | not null
+ namadepan_idn     | character varying(10) |
+ namabelakang_idn  | character varying(10) |
+ tanggal_lahir_idn | date                  |
+ status_idn        | boolean               |
+ alamat_idn        | text                  |
+Indexes:
+    "pekerjanim_pkey" PRIMARY KEY, btree (id_idn)
+
+iqbalfauzi_14650013=# DROP TABLE pekerjaNIM;
+DROP TABLE
+
+
+iqbalfauzi_14650013=# CREATE temporary table mahasiswa_sementara (id int not nul
+l,nama varchar (10), tanggal_lahir date);;
+CREATE TABLE
+iqbalfauzi_14650013=# \d mahasiswa_sementara;
+       Table "pg_temp_2.mahasiswa_sementara"
+    Column     |         Type          | Modifiers
+---------------+-----------------------+-----------
+ id            | integer               | not null
+ nama          | character varying(10) |
+ tanggal_lahir | date                  |
+
+
+iqbalfauzi_14650013=# create table gaji (gaji_kotor varchar(10), pajak varchar (
+10), gaji_bersih varchar (10)) inherits (identitasNIM);
+CREATE TABLE
+iqbalfauzi_14650013=# \q
+
+C:\Program Files\PostgreSQL\8.2\bin>
+
+C:\Program Files\PostgreSQL\8.2\bin>psql -U postgres
+Password for user postgres:
+Welcome to psql 8.2.5, the PostgreSQL interactive terminal.
+
+Type:  \copyright for distribution terms
+       \h for help with SQL commands
+       \? for help with psql commands
+       \g or terminate with semicolon to execute query
+       \q to quit
+
+postgres=# \c
+You are now connected to database "postgres".
+postgres=# \c iqbalfauzi_14650013
+You are now connected to database "iqbalfauzi_14650013".
+iqbalfauzi_14650013=# create table gaji (gaji_kotor varchar(10), pajak varchar (
+10), gaji_bersih varchar (10)) inherits (identitas
+iqbalfauzi_14650013=# grant all on table identitasnim to iqbal;
+GRANT
+iqbalfauzi_14650013=# grant all on table gaji to iqbal;
+GRANT
+iqbalfauzi_14650013=# revoke all on table identitasnim from iqbal;
+REVOKE
+
+
+
+
+

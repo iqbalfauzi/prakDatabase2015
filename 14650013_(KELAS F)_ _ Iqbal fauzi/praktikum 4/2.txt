@@ -1,0 +1,300 @@
+08572332121' , 1 , 'L');
+INSERT 0 1
+iqbalfauzi_14650013=# insert into mahasiswa values (6, 'intan' , 'Bojonegoro' ,
+'08572332121' , 2 , 'P');
+INSERT 0 1
+iqbalfauzi_14650013=# insert into mahasiswa values (6, 'melia' , 'Irian jaya' ,
+'08572332121' , 1 , 'P');
+INSERT 0 1
+iqbalfauzi_14650013=# delete from mahasiswa where alamat_mah='bojonegoro';
+DELETE 0
+iqbalfauzi_14650013=# insert into mahasiswa values (7, 'melia' , 'Irian jaya' ,
+'08572332121' , 1 , 'P');
+INSERT 0 1
+iqbalfauzi_14650013=# select * from mahasiswa;
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak | gender
+---------+----------+------------+--------------+--------+--------
+       1 | luki     | ponorogo   | 085275658789 |      2 | L
+       2 | adi      | malang     | 08572332121  |      2 | L
+       3 | atik     | magelang   | 08572332121  |      1 | P
+       4 | arif     | solo       | 08572332121  |      1 | L
+       5 | adam     | Bojonegoro | 08572332121  |      1 | L
+       6 | intan    | Bojonegoro | 08572332121  |      2 | P
+       6 | melia    | Irian jaya | 08572332121  |      1 | P
+       7 | melia    | Irian jaya | 08572332121  |      1 | P
+(8 rows)
+
+iqbalfauzi_14650013=# delete from mahasiswa where alamat_mah='Irian jaya';
+DELETE 2
+iqbalfauzi_14650013=# insert into mahasiswa values (7, 'melia' , 'Irian jaya' ,
+'08572332121' , 1 , 'P');
+INSERT 0 1
+iqbalfauzi_14650013=# select * from mahasiswa;
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak | gender
+---------+----------+------------+--------------+--------+--------
+       1 | luki     | ponorogo   | 085275658789 |      2 | L
+       2 | adi      | malang     | 08572332121  |      2 | L
+       3 | atik     | magelang   | 08572332121  |      1 | P
+       4 | arif     | solo       | 08572332121  |      1 | L
+       5 | adam     | Bojonegoro | 08572332121  |      1 | L
+       6 | intan    | Bojonegoro | 08572332121  |      2 | P
+       7 | melia    | Irian jaya | 08572332121  |      1 | P
+(7 rows)
+
+iqbalfauzi_14650013=# select nim_mah as nomor_identitas , nama_mah as nama , ala
+mat_mah as alamat, id_fak as nama_fakultas from mahasiswa;
+ nomor_identitas | nama  |   alamat   | nama_fakultas
+-----------------+-------+------------+---------------
+               1 | luki  | ponorogo   |             2
+               2 | adi   | malang     |             2
+               3 | atik  | magelang   |             1
+               4 | arif  | solo       |             1
+               5 | adam  | Bojonegoro |             1
+               6 | intan | Bojonegoro |             2
+               7 | melia | Irian jaya |             1
+(7 rows)
+
+iqbalfauzi_14650013=# select * from mahasiswa where id_fak='1' and gender='L';
+ nim_mah | nama_mah | alamat_mah | nomor_telp  | id_fak | gender
+---------+----------+------------+-------------+--------+--------
+       4 | arif     | solo       | 08572332121 |      1 | L
+       5 | adam     | Bojonegoro | 08572332121 |      1 | L
+(2 rows)
+
+iqbalfauzi_14650013=# select * from mahasiswa where id_fak='1' and gender='P';
+ nim_mah | nama_mah | alamat_mah | nomor_telp  | id_fak | gender
+---------+----------+------------+-------------+--------+--------
+       3 | atik     | magelang   | 08572332121 |      1 | P
+       7 | melia    | Irian jaya | 08572332121 |      1 | P
+(2 rows)
+
+iqbalfauzi_14650013=# select * from mahasiswa where id_fak='1' OR gender='L';
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak | gender
+---------+----------+------------+--------------+--------+--------
+       1 | luki     | ponorogo   | 085275658789 |      2 | L
+       2 | adi      | malang     | 08572332121  |      2 | L
+       3 | atik     | magelang   | 08572332121  |      1 | P
+       4 | arif     | solo       | 08572332121  |      1 | L
+       5 | adam     | Bojonegoro | 08572332121  |      1 | L
+       7 | melia    | Irian jaya | 08572332121  |      1 | P
+(6 rows)
+
+iqbalfauzi_14650013=# SELECT * FROM MAHASISWA where nam_mah between 3 and 5;
+ERROR:  column "nam_mah" does not exist
+LINE 1: SELECT * FROM MAHASISWA where nam_mah between 3 and 5;
+                                      ^
+iqbalfauzi_14650013=# SELECT * FROM MAHASISWA where nim_mah between 3 and 5;
+ nim_mah | nama_mah | alamat_mah | nomor_telp  | id_fak | gender
+---------+----------+------------+-------------+--------+--------
+       3 | atik     | magelang   | 08572332121 |      1 | P
+       4 | arif     | solo       | 08572332121 |      1 | L
+       5 | adam     | Bojonegoro | 08572332121 |      1 | L
+(3 rows)
+
+iqbalfauzi_14650013=# SELECT * FROM MAHASISWA where nim_mah not between 3 and 5;
+
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak | gender
+---------+----------+------------+--------------+--------+--------
+       1 | luki     | ponorogo   | 085275658789 |      2 | L
+       2 | adi      | malang     | 08572332121  |      2 | L
+       6 | intan    | Bojonegoro | 08572332121  |      2 | P
+       7 | melia    | Irian jaya | 08572332121  |      1 | P
+(4 rows)
+
+iqbalfauzi_14650013=# select nim_mah,nama_mah,alamat_mah,nomor_telp,id_fak ,gend
+er where nim_mah in (2,3,5);
+ERROR:  column "nim_mah" does not exist
+LINE 1: select nim_mah,nama_mah,alamat_mah,nomor_telp,id_fak ,gender...
+               ^
+iqbalfauzi_14650013=# select nama_mah,alamat_mah,nomor_telp,id_fak ,gender where
+ nim_mah in (2,3,5);
+ERROR:  column "nama_mah" does not exist
+LINE 1: select nama_mah,alamat_mah,nomor_telp,id_fak ,gender where n...
+               ^
+iqbalfauzi_14650013=# select nim_mah,nama_mah,alamat_mah,nomor_telp,id_fak ,gend
+er from mahasiswa where nim_mah in (2,3,5);
+ nim_mah | nama_mah | alamat_mah | nomor_telp  | id_fak | gender
+---------+----------+------------+-------------+--------+--------
+       2 | adi      | malang     | 08572332121 |      2 | L
+       3 | atik     | magelang   | 08572332121 |      1 | P
+       5 | adam     | Bojonegoro | 08572332121 |      1 | L
+(3 rows)
+
+iqbalfauzi_14650013=# select * from mahasiswa where nama_mah like 'a%';
+ nim_mah | nama_mah | alamat_mah | nomor_telp  | id_fak | gender
+---------+----------+------------+-------------+--------+--------
+       2 | adi      | malang     | 08572332121 |      2 | L
+       3 | atik     | magelang   | 08572332121 |      1 | P
+       4 | arif     | solo       | 08572332121 |      1 | L
+       5 | adam     | Bojonegoro | 08572332121 |      1 | L
+(4 rows)
+
+iqbalfauzi_14650013=# select * from mahasiswa where nama_mah like '%a';
+ nim_mah | nama_mah | alamat_mah | nomor_telp  | id_fak | gender
+---------+----------+------------+-------------+--------+--------
+       7 | melia    | Irian jaya | 08572332121 |      1 | P
+(1 row)
+
+iqbalfauzi_14650013=# select * from mahasiswa where nama_mah like '__%n';
+ nim_mah | nama_mah | alamat_mah | nomor_telp  | id_fak | gender
+---------+----------+------------+-------------+--------+--------
+       6 | intan    | Bojonegoro | 08572332121 |      2 | P
+(1 row)
+
+iqbalfauzi_14650013=# select * from mahasiswa where nama_mah like '__l_a';
+ nim_mah | nama_mah | alamat_mah | nomor_telp  | id_fak | gender
+---------+----------+------------+-------------+--------+--------
+       7 | melia    | Irian jaya | 08572332121 |      1 | P
+(1 row)
+
+iqbalfauzi_14650013=# select id_fak from mahasiswa;
+ id_fak
+--------
+      2
+      2
+      1
+      1
+      1
+      2
+      1
+(7 rows)
+
+iqbalfauzi_14650013=# select distinct id_fak from mahasiswa;
+ id_fak
+--------
+      1
+      2
+(2 rows)
+
+iqbalfauzi_14650013=# select * from mahasiswa;
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak | gender
+---------+----------+------------+--------------+--------+--------
+       1 | luki     | ponorogo   | 085275658789 |      2 | L
+       2 | adi      | malang     | 08572332121  |      2 | L
+       3 | atik     | magelang   | 08572332121  |      1 | P
+       4 | arif     | solo       | 08572332121  |      1 | L
+       5 | adam     | Bojonegoro | 08572332121  |      1 | L
+       6 | intan    | Bojonegoro | 08572332121  |      2 | P
+       7 | melia    | Irian jaya | 08572332121  |      1 | P
+(7 rows)
+
+iqbalfauzi_14650013=# select * from mahasiswa limit 3;
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak | gender
+---------+----------+------------+--------------+--------+--------
+       1 | luki     | ponorogo   | 085275658789 |      2 | L
+       2 | adi      | malang     | 08572332121  |      2 | L
+       3 | atik     | magelang   | 08572332121  |      1 | P
+(3 rows)
+
+iqbalfauzi_14650013=# select * from mahasiswa offset 4;
+ nim_mah | nama_mah | alamat_mah | nomor_telp  | id_fak | gender
+---------+----------+------------+-------------+--------+--------
+       5 | adam     | Bojonegoro | 08572332121 |      1 | L
+       6 | intan    | Bojonegoro | 08572332121 |      2 | P
+       7 | melia    | Irian jaya | 08572332121 |      1 | P
+(3 rows)
+
+iqbalfauzi_14650013=# select * from mahasiswa where nama_mah ~'a[dtr]';
+ nim_mah | nama_mah | alamat_mah | nomor_telp  | id_fak | gender
+---------+----------+------------+-------------+--------+--------
+       2 | adi      | malang     | 08572332121 |      2 | L
+       3 | atik     | magelang   | 08572332121 |      1 | P
+       4 | arif     | solo       | 08572332121 |      1 | L
+       5 | adam     | Bojonegoro | 08572332121 |      1 | L
+(4 rows)
+
+iqbalfauzi_14650013=# create table organ_dalam (nomor integer not null, nama var
+char (20);
+iqbalfauzi_14650013(# create table organ_dalam (nomor integer not null, nama var
+char (20));
+iqbalfauzi_14650013(# \r
+Query buffer reset (cleared).
+iqbalfauzi_14650013=# create table organ_dalam (nomor integer not null, nama var
+char(20));
+CREATE TABLE
+iqbalfauzi_14650013=# create table organ_luar (nomor integer not null, nama varc
+har (20));
+CREATE TABLE
+iqbalfauzi_14650013=# alter table organ_dalam add primary key(nomor);
+NOTICE:  ALTER TABLE / ADD PRIMARY KEY will create implicit index "organ_dalam_p
+key" for table "organ_dalam"
+ALTER TABLE
+iqbalfauzi_14650013=# alter table organ_luar add primary key(nomor);
+NOTICE:  ALTER TABLE / ADD PRIMARY KEY will create implicit index "organ_luar_pk
+ey" for table "organ_luar"
+ALTER TABLE
+iqbalfauzi_14650013=# insert into organ_dalam values (1 ,'jantung');
+INSERT 0 1
+iqbalfauzi_14650013=# insert into organ_dalam values (2 ,'paru-paru');
+INSERT 0 1
+iqbalfauzi_14650013=# insert into organ_dalam values (3 ,'tenggorokan');
+INSERT 0 1
+iqbalfauzi_14650013=# insert into organ_luar values (3 ,'tenggorokan');
+INSERT 0 1
+iqbalfauzi_14650013=# insert into organ_luar values (2 ,'mata');
+INSERT 0 1
+iqbalfauzi_14650013=# insert into organ_luar values (1 ,'hidung');
+INSERT 0 1
+iqbalfauzi_14650013=# select * from organ
+iqbalfauzi_14650013-# ;
+ERROR:  relation "organ" does not exist
+iqbalfauzi_14650013=# select * from organ_dalam;
+ nomor |    nama
+-------+-------------
+     1 | jantung
+     2 | paru-paru
+     3 | tenggorokan
+(3 rows)
+
+iqbalfauzi_14650013=# select * from organ_luar;
+ nomor |    nama
+-------+-------------
+     3 | tenggorokan
+     2 | mata
+     1 | hidung
+(3 rows)
+
+iqbalfauzi_14650013=# select nomor,nama from organ_dalam except select nomor,nam
+a from organ_luar;
+ nomor |   nama
+-------+-----------
+     1 | jantung
+     2 | paru-paru
+(2 rows)
+
+iqbalfauzi_14650013=# select nomor,nama from organ_dalam distinc select nomor,na
+ma from organ_luar;
+ERROR:  syntax error at or near "select"
+LINE 1: select nomor,nama from organ_dalam distinc select nomor,nama...
+                                                   ^
+iqbalfauzi_14650013=# select nomor,nama from organ_dalam intersect select nomor,
+nama from organ_luar;
+ nomor |    nama
+-------+-------------
+     3 | tenggorokan
+(1 row)
+
+iqbalfauzi_14650013=# select nomor,nama from organ_dalam union select nomor,nama
+ from organ_luar;
+ nomor |    nama
+-------+-------------
+     1 | hidung
+     1 | jantung
+     2 | mata
+     2 | paru-paru
+     3 | tenggorokan
+(5 rows)
+
+iqbalfauzi_14650013=# select nomor,nama from organ_dalam union all select nomor,
+nama from organ_luar;
+ nomor |    nama
+-------+-------------
+     1 | jantung
+     2 | paru-paru
+     3 | tenggorokan
+     3 | tenggorokan
+     2 | mata
+     1 | hidung
+(6 rows)
+
+iqbalfauzi_14650013=#

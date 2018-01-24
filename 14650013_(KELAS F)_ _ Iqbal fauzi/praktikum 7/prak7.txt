@@ -1,0 +1,290 @@
+Active code page: 1252
+
+C:\Program Files\PostgreSQL\8.2\bin>psql -U postgres
+Password for user postgres:
+Welcome to psql 8.2.5, the PostgreSQL interactive terminal.
+
+Type:  \copyright for distribution terms
+       \h for help with SQL commands
+       \? for help with psql commands
+       \g or terminate with semicolon to execute query
+       \q to quit
+
+postgres=# \c iqbalfauzi_14650013
+You are now connected to database "iqbalfauzi_14650013".
+iqbalfauzi_14650013=# select * from fakultas;
+ id_fak | nama_fak
+--------+-----------
+      2 | PSIKOLOGI
+      1 | SAINTEK
+      3 | HUMANIORA
+(3 rows)
+
+iqbalfauzi_14650013=# select * from mahasiswa;
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak | gender
+---------+----------+------------+--------------+--------+--------
+       1 | luki     | ponorogo   | 085275658789 |      2 | L
+       2 | adi      | malang     | 08572332121  |      2 | L
+       3 | atik     | magelang   | 08572332121  |      1 | P
+       4 | arif     | solo       | 08572332121  |      1 | L
+       5 | adam     | Bojonegoro | 08572332121  |      1 | L
+       6 | intan    | Bojonegoro | 08572332121  |      2 | P
+       7 | melia    | Irian jaya | 08572332121  |      1 | P
+(7 rows)
+
+iqbalfauzi_14650013=# select nim_mah,nama_mah,alamat_mah,nomor_telp,id_fak,gende
+r into mahasiswa2 from mahasiswa;
+SELECT
+iqbalfauzi_14650013=# select * from mahasiswa2;
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak | gender
+---------+----------+------------+--------------+--------+--------
+       1 | luki     | ponorogo   | 085275658789 |      2 | L
+       2 | adi      | malang     | 08572332121  |      2 | L
+       3 | atik     | magelang   | 08572332121  |      1 | P
+       4 | arif     | solo       | 08572332121  |      1 | L
+       5 | adam     | Bojonegoro | 08572332121  |      1 | L
+       6 | intan    | Bojonegoro | 08572332121  |      2 | P
+       7 | melia    | Irian jaya | 08572332121  |      1 | P
+(7 rows)
+
+iqbalfauzi_14650013=# select nama_fak,count(*) as jumlah_mah from mahasiswa,faku
+ltas where mahasiswa.id_fak=fakultas.id_fak group by nama_fak order by count (*)
+ asc limit 1;
+ nama_fak  | jumlah_mah
+-----------+------------
+ PSIKOLOGI |          3
+(1 row)
+
+iqbalfauzi_14650013=# select nama_mah,nama_fak,alamat_mah from mahasiswa,fakulta
+s where mahasiswa.id_fak=fakultas_id.fak and nama_fak in(select nama_fak from ma
+hasiswa,fakultas where mahasiswa.id_fak=fakultas.id_fak and nama_mah='adi')and a
+lamat_mah !='luki';
+ERROR:  missing FROM-clause entry for table "fakultas_id"
+LINE 1: ...ah from mahasiswa,fakultas where mahasiswa.id_fak=fakultas_i...
+                                                             ^
+iqbalfauzi_14650013=# select nama_mah,nama_fak,alamat_mah from mahasiswa,fakulta
+s where mahasiswa.id_fak=fakultas_id.fak and nama_fak in(select nama_fak from ma
+hasiswa,fakultas where mahasiswa.id_fak=fakultas.id_fak and nama_mah='adi')and a
+lamat_mah ()(select nama_mah from mahasiswa where nama_mah!='luki');
+ERROR:  syntax error at or near "("
+LINE 1: ...kultas.id_fak and nama_mah='adi')and alamat_mah ()(select na...
+                                                             ^
+iqbalfauzi_14650013=# select nama_mah,nama_fak,alamat_mah from mahasiswa,fakulta
+s where mahasiswa.id_fak=fakultas_id.fak and nama_fak in(select nama_fak from ma
+hasiswa,fakultas where mahasiswa.id_fak=fakultas.id_fak and nama_mah='adi')and a
+lamat_mah <>(select nama_mah from mahasiswa where nama_mah!='luki');
+ERROR:  missing FROM-clause entry for table "fakultas_id"
+LINE 1: ...ah from mahasiswa,fakultas where mahasiswa.id_fak=fakultas_i...
+                                                             ^
+iqbalfauzi_14650013=# select nama_mah,nama_fak,alamat_mah from mahasiswa,fakulta
+s where mahasiswa.id_fak=fakultas.id_fak and nama_fak in (select nama_fak from m
+ahassiswa,fakultas where mahasiswa.id_fak=fakultas.id_fak and nama_mah='edi') an
+d alamat_mah ()(select nama_mah from mahasiswa where nama_mah='luki');
+ERROR:  syntax error at or near "("
+LINE 1: ...ultas.id_fak and nama_mah='edi') and alamat_mah ()(select na...
+                                                             ^
+iqbalfauzi_14650013=# select nama_mah,nama_fak,alamat_mah from mahasiswa,fakulta
+s where mahasiswa.id_fak=fakultas.id_fak and nama_fak in (select nama_fak from m
+ahassiswa,fakultas where mahasiswa.id_fak=fakultas.id_fak and nama_mah='edi') an
+d alamat_mah ()(select nama_mah from mahasiswa where nama_mah='luki');
+ERROR:  syntax error at or near "("
+LINE 1: ...ultas.id_fak and nama_mah='edi') and alamat_mah ()(select na...
+                                                             ^
+iqbalfauzi_14650013=# select nama_mah,nama_fak,alamat_mah from mahasiswa,fakulta
+s where mahasiswa.id_fak=fakultas.id_fak and nama_fak in (select nama_fak from m
+ahassiswa,fakultas where mahasiswa.id_fak=fakultas.id_fak and nama_mah='edi') an
+d alamat_mah <>(select nama_mah from mahasiswa where nama_mah='luki');
+ERROR:  relation "mahassiswa" does not exist
+iqbalfauzi_14650013=# select nama_mah,nama_fak,alamat_mah from mahasiswa,fakulta
+s where mahasiswa.id_fak=fakultas.id_fak and nama_fak in (select nama_fak from m
+ahasiswa,fakultas where mahasiswa.id_fak=fakultas.id_fak and nama_mah='edi') and
+ alamat_mah <>(select nama_mah from mahasiswa where nama_mah='luki');
+ nama_mah | nama_fak | alamat_mah
+----------+----------+------------
+(0 rows)
+
+iqbalfauzi_14650013=# select nama_mah,nama_fak,alamat_mah from mahasiswa,fakulta
+s where mahasiswa.id_fak=fakultas.id_fak and nama_fak in (select nama_fak from m
+ahasiswa,fakultas where mahasiswa.id_fak=fakultas.id_fak and nama_mah='adi') and
+ alamat_mah <>(select nama_mah from mahasiswa where nama_mah='luki');
+ nama_mah | nama_fak  | alamat_mah
+----------+-----------+------------
+ luki     | PSIKOLOGI | ponorogo
+ adi      | PSIKOLOGI | malang
+ intan    | PSIKOLOGI | Bojonegoro
+(3 rows)
+
+iqbalfauzi_14650013=# select nama_mah,nama_fak,alamat_mah from mahasiswa,fakulta
+s where mahasiswa.id_fak=fakultas.id_fak and nama_fak in (select nama_fak from m
+ahasiswa,fakultas where mahasiswa.id_fak=fakultas.id_fak and nama_mah='adi') and
+ alamat_mah <>(select nama_mah from mahasiswa where nama_mah!='luki');
+ERROR:  more than one row returned by a subquery used as an expression
+iqbalfauzi_14650013=# select nama_mah,nama_fak,alamat_mah from mahasiswa,fakulta
+s where mahasiswa.id_fak=fakultas.id_fak and nama_fak in (select nama_fak from m
+ahasiswa,fakultas where mahasiswa.id_fak=fakultas.id_fak and nama_mah='adi') and
+ alamat_mah <>(select nama_mah from mahasiswa where nama_mah='luki');
+ nama_mah | nama_fak  | alamat_mah
+----------+-----------+------------
+ luki     | PSIKOLOGI | ponorogo
+ adi      | PSIKOLOGI | malang
+ intan    | PSIKOLOGI | Bojonegoro
+(3 rows)
+
+iqbalfauzi_14650013=# create index alamat_mah_index on mahasiswa (alamat_mah);
+CREATE INDEX
+iqbalfauzi_14650013=# \d mahasiswa;
+            Table "public.mahasiswa"
+   Column   |         Type          | Modifiers
+------------+-----------------------+-----------
+ nim_mah    | integer               | not null
+ nama_mah   | character varying(20) |
+ alamat_mah | character varying(20) |
+ nomor_telp | character varying(20) |
+ id_fak     | integer               | not null
+ gender     | character varying(1)  |
+Indexes:
+    "mahasiswa_pkey" PRIMARY KEY, btree (nim_mah, id_fak)
+    "alamat_mah_index" btree (alamat_mah)
+Foreign-key constraints:
+    "mahasiswa_id_fak_fkey" FOREIGN KEY (id_fak) REFERENCES fakultas(id_fak)
+
+iqbalfauzi_14650013=# create unique index nama_fak_index on fakultas(nama_fak);
+CREATE INDEX
+iqbalfauzi_14650013=# insert into fakultas values (4, 'SAINTEK');
+ERROR:  duplicate key violates unique constraint "nama_fak_index"
+iqbalfauzi_14650013=# insert into MAHASISWA values (8, 'intan','Malang', '085265
+47',2 ,'P');
+INSERT 0 1
+iqbalfauzi_14650013=# ALTER TABLE MAHASISWA ADD UNIQUE(nama_mah);
+NOTICE:  ALTER TABLE / ADD UNIQUE will create implicit index "mahasiswa_nama_mah
+_key" for table "mahasiswa"
+ERROR:  could not create unique index
+DETAIL:  Table contains duplicated values.
+iqbalfauzi_14650013=# insert into MAHASISWA values (9, 'james','Malang', '085265
+47',2 ,'L');
+INSERT 0 1
+iqbalfauzi_14650013=# insert into MAHASISWA values (10, 'james','Jakarta', '0852
+6547',2 ,'L');
+INSERT 0 1
+iqbalfauzi_14650013=# select*from mahasiswa;
+ nim_mah | nama_mah | alamat_mah |  nomor_telp  | id_fak | gender
+---------+----------+------------+--------------+--------+--------
+       1 | luki     | ponorogo   | 085275658789 |      2 | L
+       2 | adi      | malang     | 08572332121  |      2 | L
+       3 | atik     | magelang   | 08572332121  |      1 | P
+       4 | arif     | solo       | 08572332121  |      1 | L
+       5 | adam     | Bojonegoro | 08572332121  |      1 | L
+       6 | intan    | Bojonegoro | 08572332121  |      2 | P
+       7 | melia    | Irian jaya | 08572332121  |      1 | P
+       8 | intan    | Malang     | 08526547     |      2 | P
+       9 | james    | Malang     | 08526547     |      2 | L
+      10 | james    | Jakarta    | 08526547     |      2 | L
+(10 rows)
+
+iqbalfauzi_14650013=# select nim_mah,nama_mah,alamat_mah,nama_fak into identitas
+ from mahasiswa,fakultas where mahasiswa.id_fak=fakultas.id_fak;
+SELECT
+iqbalfauzi_14650013=# select * from identitas;
+ nim_mah | nama_mah | alamat_mah | nama_fak
+---------+----------+------------+-----------
+       1 | luki     | ponorogo   | PSIKOLOGI
+       2 | adi      | malang     | PSIKOLOGI
+       3 | atik     | magelang   | SAINTEK
+       4 | arif     | solo       | SAINTEK
+       5 | adam     | Bojonegoro | SAINTEK
+       6 | intan    | Bojonegoro | PSIKOLOGI
+       7 | melia    | Irian jaya | SAINTEK
+       8 | intan    | Malang     | PSIKOLOGI
+       9 | james    | Malang     | PSIKOLOGI
+      10 | james    | Jakarta    | PSIKOLOGI
+(10 rows)
+
+iqbalfauzi_14650013=# create table pelanggan (nama varchar(35), kode_area char(1
+0) check(length(trim(kode_area))=2), umur integrer check (umur)=0), gender char
+(1) check (gender in ('L','P')), TTL date check (ttl between '1998-01-01' and cu
+rrent_date),check (upper(trim(nama))!='nita' or upper(trim(nama))!='jeki'));
+ERROR:  syntax error at or near "="
+LINE 1: ...th(trim(kode_area))=2), umur integrer check (umur)=0), gende...
+                                                             ^
+iqbalfauzi_14650013=# create table pelanggan (nama varchar(35), kode_area char(1
+0) check(length(trim(kode_area))=2), umur integrer check (umur>=0), gender char
+(1) check (gender in ('L','P')), TTL date check (ttl between '1998-01-01' and cu
+rrent_date),check (upper(trim(nama))!='nita' or upper(trim(nama))!='jeki'));
+ERROR:  type "integrer" does not exist
+LINE 1: ...a char(10) check(length(trim(kode_area))=2), umur integrer c...
+                                                             ^
+iqbalfauzi_14650013=# create table pelanggan (nama varchar(35), kode_area char(1
+0) check(length(trim(kode_area))=2), umur integer check (umur>=0), gender char (
+1) check (gender in ('L','P')), TTL date check (ttl between '1998-01-01' and cur
+rent_date),check (upper(trim(nama))!='nita' or upper(trim(nama))!='jeki'));
+CREATE TABLE
+iqbalfauzi_14650013=# insert into pelanggan values ('fauzi' ,'12',17 ,'P' ,'1998
+-08-09');
+INSERT 0 1
+iqbalfauzi_14650013=# SELECT * FROM PELANGGAN;
+ nama  | kode_area  | umur | gender |    ttl
+-------+------------+------+--------+------------
+ fauzi | 12         |   17 | P      | 1998-08-09
+(1 row)
+
+iqbalfauzi_14650013=# insert into pelanggan values ('fauzi' ,'12',17 ,'O' ,'1998
+-08-09');
+ERROR:  new row for relation "pelanggan" violates check constraint "pelanggan_ge
+nder_check"
+iqbalfauzi_14650013=# INSERT INTO MAHASISWA VALUES (11,'  jaya+++' ,'malang','09
+789987879', 1 , 'L');
+INSERT 0 1
+iqbalfauzi_14650013=# SELECT * FROM MAHASISWA;
+ nim_mah | nama_mah  | alamat_mah |  nomor_telp  | id_fak | gender
+---------+-----------+------------+--------------+--------+--------
+       1 | luki      | ponorogo   | 085275658789 |      2 | L
+       2 | adi       | malang     | 08572332121  |      2 | L
+       3 | atik      | magelang   | 08572332121  |      1 | P
+       4 | arif      | solo       | 08572332121  |      1 | L
+       5 | adam      | Bojonegoro | 08572332121  |      1 | L
+       6 | intan     | Bojonegoro | 08572332121  |      2 | P
+       7 | melia     | Irian jaya | 08572332121  |      1 | P
+       8 | intan     | Malang     | 08526547     |      2 | P
+       9 | james     | Malang     | 08526547     |      2 | L
+      10 | james     | Jakarta    | 08526547     |      2 | L
+      11 |   jaya+++ | malang     | 09789987879  |      1 | L
+(11 rows)
+
+iqbalfauzi_14650013=# SELECT nim_mah,LTRIM (nama_mah),alamat_mah,nomor_telp,id_f
+ak,gender from mahasiswa;
+ nim_mah |  ltrim  | alamat_mah |  nomor_telp  | id_fak | gender
+---------+---------+------------+--------------+--------+--------
+       1 | luki    | ponorogo   | 085275658789 |      2 | L
+       2 | adi     | malang     | 08572332121  |      2 | L
+       3 | atik    | magelang   | 08572332121  |      1 | P
+       4 | arif    | solo       | 08572332121  |      1 | L
+       5 | adam    | Bojonegoro | 08572332121  |      1 | L
+       6 | intan   | Bojonegoro | 08572332121  |      2 | P
+       7 | melia   | Irian jaya | 08572332121  |      1 | P
+       8 | intan   | Malang     | 08526547     |      2 | P
+       9 | james   | Malang     | 08526547     |      2 | L
+      10 | james   | Jakarta    | 08526547     |      2 | L
+      11 | jaya+++ | malang     | 09789987879  |      1 | L
+(11 rows)
+
+iqbalfauzi_14650013=# select nim_mah,trim(both '+a' from nama_mah),alamat_mah,no
+_telp,id_fak, gender from mahasiswa;
+ERROR:  column "no_telp" does not exist
+LINE 1: ... nim_mah,trim(both '+a' from nama_mah),alamat_mah,no_telp,id...
+                                                             ^
+iqbalfauzi_14650013=# select nim_mah,trim(both '+a' from nama_mah),alamat_mah,no
+mor_telp,id_fak, gender from mahasiswa;
+ nim_mah | btrim | alamat_mah |  nomor_telp  | id_fak | gender
+---------+-------+------------+--------------+--------+--------
+       1 | luki  | ponorogo   | 085275658789 |      2 | L
+       2 | di    | malang     | 08572332121  |      2 | L
+       3 | tik   | magelang   | 08572332121  |      1 | P
+       4 | rif   | solo       | 08572332121  |      1 | L
+       5 | dam   | Bojonegoro | 08572332121  |      1 | L
+       6 | intan | Bojonegoro | 08572332121  |      2 | P
+       7 | meli  | Irian jaya | 08572332121  |      1 | P
+       8 | intan | Malang     | 08526547     |      2 | P
+       9 | james | Malang     | 08526547     |      2 | L
+      10 | james | Jakarta    | 08526547     |      2 | L
+      11 |   jay | malang     | 09789987879  |      1 | L
+(11 rows)

@@ -1,0 +1,246 @@
+Active code page: 1252
+
+C:\Program Files\PostgreSQL\8.2\bin>psql -U postgres
+Password for user postgres:
+Welcome to psql 8.2.5, the PostgreSQL interactive terminal.
+
+Type:  \copyright for distribution terms
+       \h for help with SQL commands
+       \? for help with psql commands
+       \g or terminate with semicolon to execute query
+       \q to quit
+
+postgres=# \l
+              List of databases
+         Name          |  Owner   | Encoding
+-----------------------+----------+-----------
+ asmarani_14650071     | postgres | SQL_ASCII
+ dbakademik            | postgres | SQL_ASCII
+ dbakademik14650097    | postgres | SQL_ASCII
+ dbakademik_14650088   | postgres | SQL_ASCII
+ dbpercobaaan_14650088 | postgres | SQL_ASCII
+ dbpercobaan           | postgres | SQL_ASCII
+ elvaricha_14650088    | postgres | SQL_ASCII
+ fahmidb               | fahmi    | SQL_ASCII
+ habibi14650080        | postgres | SQL_ASCII
+ habibi14650097        | postgres | SQL_ASCII
+ iqbalfauzi_14650013   | postgres | SQL_ASCII
+ postgres              | postgres | SQL_ASCII
+ praktikum5            | fahmi    | SQL_ASCII
+ rumahsakitdb          | fahmi    | SQL_ASCII
+ sewa_mobil            | postgres | SQL_ASCII
+ template0             | postgres | SQL_ASCII
+ template1             | postgres | SQL_ASCII
+ uas_kelasa            | postgres | SQL_ASCII
+ uts                   | postgres | SQL_ASCII
+ uts_14650071          | postgres | SQL_ASCII
+(20 rows)
+
+postgres=# create database uts_14650013;
+CREATE DATABASE
+postgres=# \c uts_14650013
+You are now connected to database "uts_14650013".
+uts_14650013=# create table barang (bar_nama varchar(20),bar_harga varchar(20),b
+ar_jenis varchar(20), bar_kode integer );
+CREATE TABLE
+uts_14650013=# create table pelanggan (pel_kode integer,pel_nama varchar(20),tel
+p varchar(20),alamat varchar(20));
+CREATE TABLE
+uts_14650013=# alter table barang add primary key(bar_kode);
+NOTICE:  ALTER TABLE / ADD PRIMARY KEY will create implicit index "barang_pkey"
+for table "barang"
+ALTER TABLE
+uts_14650013=# alter table pelanggan add primary key(pel_kode);
+NOTICE:  ALTER TABLE / ADD PRIMARY KEY will create implicit index "pelanggan_pke
+y" for table "pelanggan"
+ALTER TABLE
+uts_14650013=# create table penjualan (bar_kode integer ,pen_kode integer,petuga
+s varchar(20),pel_kode integer references barang ,primary key(pen_kode,bar_kode)
+;
+uts_14650013(# create table penjualan (bar_kode integer ,pen_kode integer,petuga
+s varchar(20),pel_kode integer references barang ,primary key(pen_kode,bar_kode)
+);
+uts_14650013(# \r
+Query buffer reset (cleared).
+uts_14650013=# create table penjualan (bar_kode integer ,pen_kode integer,petuga
+s varchar(20),pel_kode integer not null references barang ,primary key(pen_kode,
+bar_kode));
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "penjualan_pkey"
+for table "penjualan"
+CREATE TABLE
+uts_14650013=# alter table penjualan references pelanggan,primary key(pen_kode,p
+el_kode));
+ERROR:  syntax error at or near "references"
+LINE 1: alter table penjualan references pelanggan,primary key(pen_k...
+                              ^
+uts_14650013=# select * from barang;
+ bar_nama | bar_harga | bar_jenis | bar_kode
+----------+-----------+-----------+----------
+(0 rows)
+
+uts_14650013=# select * from penjualan;
+ bar_kode | pen_kode | petugas | pel_kode
+----------+----------+---------+----------
+(0 rows)
+
+uts_14650013=# select * from pelanggan;
+ pel_kode | pel_nama | telp | alamat
+----------+----------+------+--------
+(0 rows)
+
+uts_14650013=# alter table penjualan add column "tanggal" date;
+ALTER TABLE
+uts_14650013=# alter table barang add column "stok_barang" varchar(20);
+ALTER TABLE
+uts_14650013=# insert into pelanggan values (001, 'Iqbal' ,'085752145455' ,'Bojo
+negoro');
+INSERT 0 1
+uts_14650013=# insert into pelanggan values (002, 'fauzi' ,'085864864455' ,'Mala
+ng');
+INSERT 0 1
+uts_14650013=# insert into pelanggan values (003, 'bayu' ,'082264864455' ,'Madiu
+n');
+INSERT 0 1
+uts_14650013=# insert into pelanggan values (004, 'muslim' ,'083364864455' ,'Med
+an');
+INSERT 0 1
+uts_14650013=# select * from pelanggan;
+ pel_kode | pel_nama |     telp     |   alamat
+----------+----------+--------------+------------
+        1 | Iqbal    | 085752145455 | Bojonegoro
+        2 | fauzi    | 085864864455 | Malang
+        3 | bayu     | 082264864455 | Madiun
+        4 | muslim   | 083364864455 | Medan
+(4 rows)
+
+uts_14650013=# alter table penjualan add constraint relasi_penjualan foreign key
+(pel_kode) references pelanggan (pel_kode) on update no action on delete no acti
+on;
+ALTER TABLE
+uts_14650013=# select * from barang;
+ bar_nama | bar_harga | bar_jenis | bar_kode | stok_barang
+----------+-----------+-----------+----------+-------------
+(0 rows)
+
+uts_14650013=# select * from penjualan;
+ bar_kode | pen_kode | petugas | pel_kode | tanggal
+----------+----------+---------+----------+---------
+(0 rows)
+
+uts_14650013=# select * from pelanggan;
+ pel_kode | pel_nama |     telp     |   alamat
+----------+----------+--------------+------------
+        1 | Iqbal    | 085752145455 | Bojonegoro
+        2 | fauzi    | 085864864455 | Malang
+        3 | bayu     | 082264864455 | Madiun
+        4 | muslim   | 083364864455 | Medan
+(4 rows)
+
+uts_14650013=# insert into barang ('baju' , '2000' , 'pakaian' , '00001' ,20/10/
+2015>;
+uts_14650013(# \r
+Query buffer reset (cleared).
+uts_14650013=# insert into barang ('baju' , '2000' , 'pakaian' , '00001' , 20/10
+/2015 >;
+uts_14650013(# insert into barang values ('baju' , '2000' , 'pakaian' , '00001'
+, 20/10/2015 >;
+uts_14650013(# \r
+Query buffer reset (cleared).
+uts_14650013=# insert into barang values ('baju' , '2000' , 'pakaian' , 00001 ,
+20/10/2015 >;
+uts_14650013(# insert into barang values ('baju' , '2000' , 'pakaian' , 00001 ,
+2015-10-13 >;
+uts_14650013(# insert into barang values ('baju' , '2000' , 'pakaian' , 00001 ,
+'2015-10-13'>;
+uts_14650013(# alter table barang alter column tanggal varchar(20);
+uts_14650013(# \r
+Query buffer reset (cleared).
+uts_14650013=# alter table barang alter column tanggal varchar(20);
+ERROR:  syntax error at or near "varchar"
+LINE 1: alter table barang alter column tanggal varchar(20);
+                                                ^
+uts_14650013=# alter table barang drop column "tanggal";
+ERROR:  column "tanggal" of relation "barang" does not exist
+uts_14650013=# insert into barang values ('baju' , '2000' , 'pakaian' , 00001 ,
+'50');
+INSERT 0 1
+uts_14650013=# insert into barang values ('kaos' , '7000' , 'pakaian dan baju '
+, 00002 , '60');
+INSERT 0 1
+uts_14650013=# insert into barang values ('beras' , '8000' , 'makanan ' , 00003
+, '60');
+INSERT 0 1
+uts_14650013=# insert into barang values ('jagung' , '8000' , 'makanan ' , 00004
+ , '60');
+INSERT 0 1
+uts_14650013=# insert into penjualan values (00001, 1 , 'rena' , 001 );
+INSERT 0 1
+uts_14650013=# insert into penjualan values (00002, 2 , 'roni' , 002 );
+INSERT 0 1
+uts_14650013=# insert into penjualan values (00003, 3 , 'wahyu' , 003 );
+INSERT 0 1
+uts_14650013=# insert into penjualan values (00004, 4 , 'indra' , 004 );
+INSERT 0 1
+uts_14650013=# select * from barang;
+ bar_nama | bar_harga |     bar_jenis     | bar_kode | stok_barang
+----------+-----------+-------------------+----------+-------------
+ baju     | 2000      | pakaian           |        1 | 50
+ kaos     | 7000      | pakaian dan baju  |        2 | 60
+ beras    | 8000      | makanan           |        3 | 60
+ jagung   | 8000      | makanan           |        4 | 60
+(4 rows)
+
+uts_14650013=# select * from penjualan;
+ bar_kode | pen_kode | petugas | pel_kode | tanggal
+----------+----------+---------+----------+---------
+        1 |        1 | rena    |        1 |
+        2 |        2 | roni    |        2 |
+        3 |        3 | wahyu   |        3 |
+        4 |        4 | indra   |        4 |
+(4 rows)
+
+uts_14650013=# select * from pelanggan;
+ pel_kode | pel_nama |     telp     |   alamat
+----------+----------+--------------+------------
+        1 | Iqbal    | 085752145455 | Bojonegoro
+        2 | fauzi    | 085864864455 | Malang
+        3 | bayu     | 082264864455 | Madiun
+        4 | muslim   | 083364864455 | Medan
+(4 rows)
+
+uts_14650013=# delete from table pelanggan where pel_kode=1;
+ERROR:  syntax error at or near "table"
+LINE 1: delete from table pelanggan where pel_kode=1;
+                    ^
+uts_14650013=# delete from pelanggan where pel_kode=1;
+ERROR:  update or delete on table "pelanggan" violates foreign key constraint "r
+elasi_penjualan" on table "penjualan"
+DETAIL:  Key (pel_kode)=(1) is still referenced from table "penjualan".
+uts_14650013=# delete from penjualan where pel_kode=1;
+DELETE 1
+uts_14650013=# delete from pelanggan where pel_kode=1;
+DELETE 1
+uts_14650013=# update pelanggan set pel_nama=1 where pel_kode=1;
+UPDATE 0
+uts_14650013=# update pelanggan set alamat='Merauke' where pel_kode=1;
+UPDATE 0
+uts_14650013=# select * from pelanggan order by pel_nama asc;
+ pel_kode | pel_nama |     telp     | alamat
+----------+----------+--------------+--------
+        3 | bayu     | 082264864455 | Madiun
+        2 | fauzi    | 085864864455 | Malang
+        4 | muslim   | 083364864455 | Medan
+(3 rows)
+
+uts_14650013=# select bar_nama,bar_kode,stok_barang,bar_harga where bar_harga >=
+9000;
+ERROR:  column "bar_nama" does not exist
+LINE 1: select bar_nama,bar_kode,stok_barang,bar_harga where bar_har...
+               ^
+uts_14650013=# select bar_nama,bar_kode,stok_barang,bar_harga from barang where
+bar_harga >=9000;
+ bar_nama | bar_kode | stok_barang | bar_harga
+----------+----------+-------------+-----------
+(0 rows)
+
+uts_14650013=# ^A
